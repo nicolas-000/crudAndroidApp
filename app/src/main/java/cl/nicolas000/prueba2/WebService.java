@@ -1,10 +1,13 @@
 package cl.nicolas000.prueba2;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.view.View;
 import android.view.WindowManager;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -24,8 +27,8 @@ import java.util.Calendar;
 
 public class WebService extends AppCompatActivity {
     TextView textDate, textTemp, textHum;
-    ImageView imageTemp;
-
+    ImageView imageTemp, imageLight;
+    ConstraintLayout constLight;
     RequestQueue datos;
     Handler mHandler=new Handler();
     @Override
@@ -39,9 +42,24 @@ public class WebService extends AppCompatActivity {
         textTemp = (TextView) findViewById(R.id.textTemp);
         textHum = (TextView) findViewById(R.id.textHum);
         imageTemp = (ImageView) findViewById(R.id.imageTemp);
+        imageLight = (ImageView) findViewById(R.id.imageBulb);
+        constLight = (ConstraintLayout) findViewById(R.id.constraintLight);
 
         datos = Volley.newRequestQueue(this);
         Refrescar.run();
+
+        constLight.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (constLight.getTag().equals("1")) {
+                    imageLight.setImageResource(R.drawable.lightbulboff);
+                    constLight.setTag("0");
+                } else {
+                    imageLight.setImageResource(R.drawable.lightbulb);
+                    constLight.setTag("1");
+                }
+            }
+        });
     }
 
     public Runnable Refrescar =new Runnable() {
