@@ -8,21 +8,21 @@ import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    Button btnIngresar;
+public class Menu extends AppCompatActivity {
+    Button btnDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_menu);
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        btnIngresar = (Button) findViewById(R.id.btnIngresar);
-        btnIngresar.setOnClickListener(new View.OnClickListener() {
+        btnDatos = (Button) findViewById(R.id.btnDatos);
+        btnDatos.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent m = new Intent(MainActivity.this, Menu.class);
-                startActivity(m);
+                Intent d = new Intent(Menu.this, WebService.class);
+                startActivity(d);
                 finish();
             }
         });

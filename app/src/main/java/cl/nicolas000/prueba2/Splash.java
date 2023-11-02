@@ -4,27 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.os.Handler;
 import android.view.WindowManager;
-import android.widget.Button;
 
-public class MainActivity extends AppCompatActivity {
-    Button btnIngresar;
+public class Splash extends AppCompatActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_splash);
 
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
-        btnIngresar = (Button) findViewById(R.id.btnIngresar);
-        btnIngresar.setOnClickListener(new View.OnClickListener() {
+        new Handler().postDelayed(new Runnable() {
             @Override
-            public void onClick(View view) {
-                Intent m = new Intent(MainActivity.this, Menu.class);
-                startActivity(m);
+            public void run() {
+                Intent i=new Intent(Splash.this, MainActivity.class);
+                startActivity(i);
                 finish();
             }
-        });
+        }, 10000);
     }
 }
