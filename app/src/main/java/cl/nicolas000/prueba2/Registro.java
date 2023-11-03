@@ -62,7 +62,7 @@ public class Registro extends AppCompatActivity {
             datos.put("Nombre",nom);
             datos.put("Apellido",ape);
             datos.put("Email",mai);
-            datos.put("Password",cla);
+            datos.put("Clave",cla);
             db.insert("USUARIOS",null,datos);
 
             Crouton.showText(this, "Datos Ingresados Sin Problemas", Style.CONFIRM);

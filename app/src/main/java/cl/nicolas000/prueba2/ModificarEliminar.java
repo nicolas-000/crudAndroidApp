@@ -2,11 +2,19 @@ package cl.nicolas000.prueba2;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import de.keyboardsurfer.android.widget.crouton.Crouton;
+import de.keyboardsurfer.android.widget.crouton.Style;
 
 public class ModificarEliminar extends AppCompatActivity {
     EditText editTextNombreUsuario, editTextApellidoUsuario, editTextEmailUsuario, editTextPassUsuario, editTextPass2Usuario;
@@ -23,6 +31,8 @@ public class ModificarEliminar extends AppCompatActivity {
         editTextEmailUsuario = (EditText) findViewById(R.id.editTextEmailAddressUsuario);
         editTextPassUsuario = (EditText) findViewById(R.id.editTextPasswordUsuario);
         editTextPass2Usuario = (EditText) findViewById(R.id.editTextPassword2Usuario);
+        btnModificar = (Button) findViewById(R.id.btnModificar);
+        btnEliminar = (Button) findViewById(R.id.btnEliminar);
 
         Bundle b=getIntent().getExtras();
         if(b!=null)
@@ -31,7 +41,7 @@ public class ModificarEliminar extends AppCompatActivity {
             nombre=b.getString("Nombre");
             apellido=b.getString("Apellido");
             mail=b.getString("Email");
-            pass=b.getString("Pass");
+            pass = getPassword(idUsuario);
         }
 
         editTextNombreUsuario.setText(nombre);
@@ -43,8 +53,14 @@ public class ModificarEliminar extends AppCompatActivity {
         btnModificar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                modificar(idUsuario,editTextNombreUsuario.getText().toString(),editTextApellidoUsuario.getText().toString(), editTextEmailUsuario.getText().toString());
-                onBackPressed();
+                if (editTextNombreUsuario.getText().toString() != "" && editTextApellidoUsuario.getText().toString() != "" && editTextEmailUsuario.getText().toString() != "" && editTextPassUsuario.getText().toString() != "" && editTextPass2Usuario.getText().toString() != "") {
+                    if (editTextPassUsuario.getText().toString().equals(editTextPass2Usuario.getText().toString())) {
+                        if (validarPassword(editTextPassUsuario.getText().toString())) {
+                            modificar(idUsuario,editTextNombreUsuario.getText().toString(),editTextApellidoUsuario.getText().toString(), editTextEmailUsuario.getText().toString(), editTextPassUsuario.getText().toString());
+                            onBackPressed();
+                        } else { Crouton.showText(ModificarEliminar.this, "La contraseña debe tener al menos 8 caracteres con Mayúsculas, Minúsculas, Números y Caracteres Especiales", Style.ALERT); }
+                    } else { Crouton.showText(ModificarEliminar.this, "Las contraseñas no coinciden", Style.ALERT); }
+                } else { Crouton.showText(ModificarEliminar.this, "No pueden haber campos vacíos", Style.ALERT); }
             }
         });
 
@@ -57,11 +73,33 @@ public class ModificarEliminar extends AppCompatActivity {
         });
     }
 
-    private void modificar(int Id, String Nombre, String Apellido, String Email)
+    public static boolean validarPassword(String password) {
+        Pattern patron = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,100}$");
+        Matcher matcher = patron.matcher(password);
+        return matcher.matches();
+    }
+
+    private String getPassword(int id) {
+        ConnectionDBHelper helper=new ConnectionDBHelper(this,"APPSQLITE", null,1);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String sql="SELECT * FROM USUARIOS WHERE ID="+id;
+
+        Cursor c=db.rawQuery(sql,null);
+        if(c.moveToFirst())
+        {
+            do{
+                pass = c.getString(4);
+            }while(c.moveToNext());
+        }
+        db.close();
+        return pass;
+    }
+
+    private void modificar(int Id, String Nombre, String Apellido, String Email, String clave)
     {
         ConnectionDBHelper helper=new ConnectionDBHelper(this,"APPSQLITE", null,1);
         SQLiteDatabase db = helper.getReadableDatabase();
-        String sql="UPDATE USUARIOS SET NOMBRE='"+Nombre+"', APELLIDO='"+Apellido+"', EMAIL='"+Email+"' WHERE ID="+Id;
+        String sql="UPDATE USUARIOS SET NOMBRE='"+Nombre+"', APELLIDO='"+Apellido+"', EMAIL='"+Email+"', CLAVE='"+clave+"' WHERE ID="+Id;
         db.execSQL(sql);
         db.close();
     }
