@@ -15,11 +15,14 @@ public class ConnectionDBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL(query);
+        db.execSQL("CREATE TABLE SUPERUSUARIOS (ID INTEGER PRIMARY KEY, NOMBRE TEXT, EMAIL TEXT, PASSWORD TEXT)");
+        db.execSQL("INSERT INTO SUPERUSUARIOS (NOMBRE, EMAIL, PASSWORD) VALUES ('ADMIN', 'admin@mail.com', 'Admin123?')");
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         db.execSQL("DROP TABLE USUARIOS");
+        db.execSQL("DROP TABLE SUPERUSUARIOS");
         db.execSQL(query);
     }
 }
