@@ -37,14 +37,8 @@ public class Listado extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 int idUsuario = Integer.parseInt(lista.get(position).split(" ")[0]);
-                String nombre=lista.get(position).split(" ")[1];
-                String apellido=lista.get(position).split(" ")[2];
-                String mail=lista.get(position).split(" ")[3];
                 Intent intent=new Intent(Listado.this,ModificarEliminar.class);
                 intent.putExtra("Id",idUsuario);
-                intent.putExtra("Nombre",nombre);
-                intent.putExtra("Apellido",apellido);
-                intent.putExtra("Email",mail);
                 startActivity(intent);
             }
         });

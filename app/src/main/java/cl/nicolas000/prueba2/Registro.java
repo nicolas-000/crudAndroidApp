@@ -34,7 +34,7 @@ public class Registro extends AppCompatActivity {
         btnRegistro.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (nombres.getText().toString() != "" && apellidos.getText().toString() != "" && email.getText().toString() != "" && pass.getText().toString() != "" && pass2.getText().toString() != "") {
+                if (nombres.getText().toString().trim().length() > 0 && apellidos.getText().toString().trim().length() > 0 && email.getText().toString().trim().length() > 0 && pass.getText().toString().trim().length() > 0 && pass2.getText().toString().trim().length() > 0) {
                     if (pass.getText().toString().equals(pass2.getText().toString())) {
                         if (validarPassword(pass.getText().toString())) {
                             registrar(nombres.getText().toString(), apellidos.getText().toString(), email.getText().toString(), pass.getText().toString());
@@ -69,5 +69,10 @@ public class Registro extends AppCompatActivity {
         }catch (Exception e){
             Crouton.showText(this, "Error"+e.getMessage(), Style.ALERT);
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

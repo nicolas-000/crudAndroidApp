@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,6 +22,7 @@ public class ModificarEliminar extends AppCompatActivity {
     Button btnModificar, btnEliminar;
     int idUsuario;
     String nombre, apellido, mail, pass;
+    ArrayList<String> listaDatos;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,10 +40,11 @@ public class ModificarEliminar extends AppCompatActivity {
         if(b!=null)
         {
             idUsuario=b.getInt("Id");
-            nombre=b.getString("Nombre");
-            apellido=b.getString("Apellido");
-            mail=b.getString("Email");
-            pass = getPassword(idUsuario);
+            listaDatos = obtenerDatosUsuario(idUsuario);
+            nombre = listaDatos.get(0);
+            apellido = listaDatos.get(1);
+            mail = listaDatos.get(2);
+            pass = listaDatos.get(3);
         }
 
         editTextNombreUsuario.setText(nombre);
@@ -73,26 +76,30 @@ public class ModificarEliminar extends AppCompatActivity {
         });
     }
 
+    private ArrayList<String> obtenerDatosUsuario(int id){
+        ArrayList<String> datos=new ArrayList<String>();
+        ConnectionDBHelper helper = new ConnectionDBHelper(this, "APPSQLITE", null, 1);
+        SQLiteDatabase db = helper.getReadableDatabase();
+        String query = "SELECT * FROM USUARIOS WHERE ID="+id;
+
+        Cursor c=db.rawQuery(query,null);
+        if(c.moveToFirst())
+        {
+            do{
+                datos.add(c.getString(1));
+                datos.add(c.getString(2));
+                datos.add(c.getString(3));
+                datos.add(c.getString(4));
+            }while(c.moveToNext());
+        }
+        db.close();
+        return datos;
+    }
+
     public static boolean validarPassword(String password) {
         Pattern patron = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–[{}]:;',?/*~$^+=<>]).{8,100}$");
         Matcher matcher = patron.matcher(password);
         return matcher.matches();
-    }
-
-    private String getPassword(int id) {
-        ConnectionDBHelper helper=new ConnectionDBHelper(this,"APPSQLITE", null,1);
-        SQLiteDatabase db = helper.getReadableDatabase();
-        String sql="SELECT * FROM USUARIOS WHERE ID="+id;
-
-        Cursor c=db.rawQuery(sql,null);
-        if(c.moveToFirst())
-        {
-            do{
-                pass = c.getString(4);
-            }while(c.moveToNext());
-        }
-        db.close();
-        return pass;
     }
 
     private void modificar(int Id, String Nombre, String Apellido, String Email, String clave)
