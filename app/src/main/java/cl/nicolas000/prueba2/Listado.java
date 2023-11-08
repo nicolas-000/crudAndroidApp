@@ -9,6 +9,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -62,6 +63,18 @@ public class Listado extends AppCompatActivity {
 
             }
         });
+
+        editTextBuscar.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View view, int i, KeyEvent keyEvent) {
+                if(i == KeyEvent.KEYCODE_DEL) {
+                    cargarLista();
+                    if (editTextBuscar.getText().toString().length() != 0) {
+                        lista.removeIf(usuario -> (!usuario.contains(editTextBuscar.getText().toString())));}
+                    return true;
+                } else { return false; }
+            }
+        });
     }
 
 
@@ -106,5 +119,13 @@ public class Listado extends AppCompatActivity {
         }
         db.close();
         return datos;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent m = new Intent(Listado.this, Menu.class);
+        startActivity(m);
+        finish();
     }
 }

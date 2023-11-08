@@ -40,6 +40,7 @@ public class Registro extends AppCompatActivity {
                             registrar(nombres.getText().toString(), apellidos.getText().toString(), email.getText().toString(), pass.getText().toString());
                             Intent l = new Intent(Registro.this, Listado.class);
                             startActivity(l);
+                            finish();
                         } else { Crouton.showText(Registro.this, "La contraseña debe tener al menos 8 caracteres con Mayúsculas, Minúsculas, Números y Caracteres Especiales", Style.ALERT); }
                     } else { Crouton.showText(Registro.this, "Las contraseñas no coinciden", Style.ALERT); }
                 } else { Crouton.showText(Registro.this, "No pueden haber campos vacíos", Style.ALERT); }
@@ -69,10 +70,5 @@ public class Registro extends AppCompatActivity {
         }catch (Exception e){
             Crouton.showText(this, "Error"+e.getMessage(), Style.ALERT);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        super.onBackPressed();
     }
 }
