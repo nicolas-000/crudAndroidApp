@@ -71,4 +71,12 @@ public class Registro extends AppCompatActivity {
             Crouton.showText(this, "Error"+e.getMessage(), Style.ALERT);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        Intent m = new Intent(Registro.this, Menu.class);
+        startActivity(m);
+        finish();
+    }
 }

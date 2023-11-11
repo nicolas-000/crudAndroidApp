@@ -34,6 +34,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent r = new Intent(Menu.this, Registro.class);
                 startActivity(r);
+                finish();
             }
         });
 
@@ -42,6 +43,7 @@ public class Menu extends AppCompatActivity {
             public void onClick(View view) {
                 Intent m = new Intent(Menu.this, Listado.class);
                 startActivity(m);
+                finish();
             }
         });
 

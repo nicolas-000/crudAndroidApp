@@ -9,53 +9,49 @@
 
     <Button
         android:id="@+id/btnAcerca"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
         android:backgroundTint="#4f5bff"
         android:text="Acerca De"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.508"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnDatos" />
 
     <Button
         android:id="@+id/btnDatos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
         android:backgroundTint="#4f5bff"
         android:text="Capturar Datos"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnMostrar" />
 
     <Button
         android:id="@+id/btnMostrar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="48dp"
         android:layout_marginTop="36dp"
+        android:backgroundTint="#4f5bff"
         android:text="Mostrar Usuarios"
         android:textColor="#FFFFFF"
-        android:backgroundTint="#4f5bff"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.502"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btnRegistro" />
 
     <Button
         android:id="@+id/btnRegistro"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="169dp"
+        android:layout_height="48dp"
         android:layout_marginTop="56dp"
         android:backgroundTint="#4f5bff"
         android:text="Registrar Usuarios"
         android:textColor="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageView" />
 

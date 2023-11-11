@@ -33,13 +33,23 @@ public class MainActivity extends AppCompatActivity {
         btnIngresar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (validarCredenciales(editTextEmail.getText().toString(), editTextPass.getText().toString())) {
-                    Intent m = new Intent(MainActivity.this, Menu.class);
-                    startActivity(m);
-                    finish();
-                } else { Crouton.showText(MainActivity.this, "Credenciales Incorrectas", Style.ALERT); }
+                if (datosVacios(editTextEmail.getText().toString(), editTextPass.getText().toString())) {
+                    if (validarCredenciales(editTextEmail.getText().toString(), editTextPass.getText().toString())) {
+                        Intent m = new Intent(MainActivity.this, Menu.class);
+                        startActivity(m);
+                        finish();
+                    } else {
+                        Crouton.showText(MainActivity.this, "Credenciales Incorrectas", Style.ALERT);
+                    }
+                } else { Crouton.showText(MainActivity.this, "No pueden haber campos vacíos", Style.ALERT); }
             }
         });
+    }
+
+    private boolean datosVacios(String mail, String pass) {
+        if (mail.trim().length() > 0 || pass.trim().length() > 0) {
+            return true;
+        } else { return false; }
     }
 
     private boolean validarCredenciales(String mail, String pass) {
